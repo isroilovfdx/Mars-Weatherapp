@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mars Weather App</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="./tailwind.config.js" type="module"></script>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="shortcut icon" href="./8504201-removebg-preview.png" type="image/x-icon">
+  <link rel="manifest" href="/manifest.json">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+  <script>
+    if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
+      navigator.serviceWorker.register('/sw.js')
+        .then(registration => console.log('Service Worker registered with scope:', registration.scope))
+        .catch(error => console.error('Service Worker registration failed:', error));
+    }
+  </script>
+
+</head>
+
+<body class="h-screen flex justify-center text-white text-center" style="background-color: #2C3E50;">
+
+  <main>
+    <section>
+      <img src="./8504201-removebg-preview.png" alt="">
+
+      <div class="container mx-auto max-w-[90%] mt-20">
+        <h1 class="text-5xl">Weather App</h1>
+        <p>Weather <span class="text-amber-500">ForeCasts</span></p>
+        <a href="./main.html">
+          <button class="rounded-[30px] border border-amber-500 bg-amber-500 px-8 py-3 mt-5">Get Started</button>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <script src="/main.js"></script>
+
+  <button onclick="installPWA()" class="fixed bottom-4 right-4 bg-green-500 text-white py-2 px-4 rounded-lg">Install
+    PWA</button>
+  <script src="./script.js"></script>
+  <script>
+    function installPWA() {
+      const installPrompt = window.deferredPrompt;
+
+      if (installPrompt) {
+        installPrompt.prompt();
+
+        installPrompt.userChoice.then(choiceResult => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('User accepted the install prompt');
+          } else {
+            console.log('User dismissed the install prompt');
+          }
+          window.deferredPrompt = null;
+        });
+      }
+    }
+
+    window.addEventListener('beforeinstallprompt', event => {
+      event.preventDefault();
+      window.deferredPrompt = event;
+    });
+  </script>
+</body>
+
+</html>
